@@ -1,1 +1,42 @@
+import unittest
+import random
+from deck_class import Deck  # Assuming the Deck class is in deck.py
+
+class TestDeck(unittest.TestCase):
+    def setUp(self):
+        self.deck = Deck()
+    
+    def test_deck_initialization(self):
+        """Test if the deck initializes with 52 cards."""
+        self.assertEqual(len(self.deck.cards), 52)
+    
+    def test_deck_contains_all_cards(self):
+        """Test if the deck contains all expected cards."""
+        suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+        ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+        expected_cards = {f"{rank} of {suit}" for suit in suits for rank in ranks}
+        self.assertEqual(set(self.deck.cards), expected_cards)
+    
+    def test_shuffle_changes_order(self):
+        """Test if shuffle changes the order of cards."""
+        original_order = self.deck.cards[:]
+        self.deck.shuffle()
+        self.assertNotEqual(original_order, self.deck.cards)
+    
+    def test_draw_card(self):
+        """Test if drawing a card reduces the deck size by one."""
+        initial_size = len(self.deck.cards)
+        card = self.deck.draw_card()
+        self.assertIsNotNone(card)
+        self.assertEqual(len(self.deck.cards), initial_size - 1)
+    
+    def test_draw_until_empty(self):
+        """Test if drawing all cards results in an empty deck."""
+        for _ in range(52):
+            self.assertIsNotNone(self.deck.draw_card())
+        self.assertIsNone(self.deck.draw_card())
+    
+if __name__ == '__main__':
+    unittest.main()
+
 

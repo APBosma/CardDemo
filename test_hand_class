@@ -1,1 +1,38 @@
+import unittest
+from hand_class import Hand  # Assuming the Hand class is in hand.py
+
+class TestHand(unittest.TestCase):
+    def setUp(self):
+        self.hand = Hand()
+    
+    def test_hand_initialization(self):
+        """Test if the hand initializes as empty."""
+        self.assertEqual(len(self.hand.cards), 0)
+    
+    def test_add_card(self):
+        """Test if adding a card increases hand size."""
+        self.hand.add_card("Ace of Spades")
+        self.assertEqual(len(self.hand.cards), 1)
+        self.assertIn("Ace of Spades", self.hand.cards)
+    
+    def test_show_hand_empty(self):
+        """Test if an empty hand displays correctly."""
+        self.assertEqual(self.hand.show_hand(), "Hand is empty.")
+    
+    def test_show_hand_with_cards(self):
+        """Test if showing hand displays all cards correctly."""
+        self.hand.add_card("Ace of Spades")
+        self.hand.add_card("10 of Hearts")
+        self.assertEqual(self.hand.show_hand(), "Ace of Spades, 10 of Hearts")
+    
+    def test_card_count(self):
+        """Test if the card count method returns correct number."""
+        self.hand.add_card("Queen of Diamonds")
+        self.assertEqual(self.hand.card_count(), 1)
+        self.hand.add_card("2 of Clubs")
+        self.assertEqual(self.hand.card_count(), 2)
+    
+if __name__ == '__main__':
+    unittest.main()
+
 
